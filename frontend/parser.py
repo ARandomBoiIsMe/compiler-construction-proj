@@ -3,6 +3,7 @@ from typing import List
 
 class Identifier:
     def __init__(self, name):
+        self.type = "Identifier"
         self.name = name
     
     def __repr__(self):
@@ -10,6 +11,7 @@ class Identifier:
 
 class IntegerLiteral:
     def __init__(self, value):
+        self.type = "IntegerLiteral"
         self.value = value
     
     def __repr__(self):
@@ -17,6 +19,7 @@ class IntegerLiteral:
 
 class BinaryExpr:
     def __init__(self, left_operand, operator, right_operand):
+        self.type = "BinaryExpr"
         self.left_operand = left_operand
         self.operator = operator
         self.right_operand = right_operand
@@ -26,6 +29,7 @@ class BinaryExpr:
 
 class UnaryExpr:
     def __init__(self, unary_operand, operator):
+        self.type = "UnaryExpr"
         self.unary_operand = unary_operand
         self.operator = operator
     
@@ -34,6 +38,7 @@ class UnaryExpr:
 
 class AssignmentStmt:
     def __init__(self, identifier, expr):
+        self.type = "AssignmentStmt"
         self.identifier = identifier
         self.expr = expr
     
@@ -42,6 +47,7 @@ class AssignmentStmt:
 
 class ReturnStmt:
     def __init__(self, value):
+        self.type = "ReturnStmt"
         self.value = value
     
     def __repr__(self):
