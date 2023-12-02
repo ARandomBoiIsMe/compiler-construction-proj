@@ -45,13 +45,13 @@ class AssignmentStmt:
     def __repr__(self):
         return f'AssignmentStmt(identifier={self.identifier}, expr={self.expr})'
 
-class ReturnStmt:
-    def __init__(self, value):
-        self.type = "ReturnStmt"
-        self.value = value
+class PrintStmt:
+    def __init__(self, expr):
+        self.type = "PrintStmt"
+        self.expr = expr
     
     def __repr__(self):
-        return f'ReturnStmt(value={self.value})'
+        return f'PrintStmt(expr={self.expr})'
 
 class Program:
     def __init__(self, body):
@@ -88,8 +88,16 @@ class Parser:
 
         return Program(self.program_body)
     
-    def parse_print_statement():
-        pass
+    def parse_print_statement(self):
+        self.move_forward()
+        if self.current_token.type != TokenType.LEFT_PAREN:
+            return None
+        
+        self.move_forward() # Moves into parentheses
+        expr = self.parse_expression()
+        self.move_forward() # Moves out of parentheses
+
+        return PrintStmt(expr)
 
     def parse_assignment(self):
         identifier = self.parse_non_terminal_expression()        
