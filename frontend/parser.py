@@ -94,12 +94,12 @@ class Parser:
     def parse_assignment(self):
         identifier = self.parse_non_terminal_expression()        
         self.move_forward()
-        expression = self.parse_additive_expression()
+        expression = self.parse_expression()
 
         return AssignmentStmt(identifier, expression)
 
     # Handles addition and subtraction expressions
-    def parse_additive_expression(self):
+    def parse_expression(self):
         left = self.parse_multiplicative_expression()
 
         if not left:
