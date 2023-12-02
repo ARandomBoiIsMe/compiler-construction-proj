@@ -7,9 +7,8 @@ def main():
     _lexer = lexer.Lexer(source_code)
     tokens = _lexer.get_tokens()
 
-    print(tokens)
-
     _parser = parser.Parser(tokens)
+    _parser.parse()
 
 if __name__ == '__main__':
     main()

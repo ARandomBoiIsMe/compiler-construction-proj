@@ -1,14 +1,13 @@
-from dataclasses import dataclass
 from frontend.lexer import Token, TokenType
 from typing import List
 
-@dataclass
 class Identifier:
-    name: str
+    def __init__(self, name):
+        self.name = name
 
-@dataclass
 class IntegerLiteral:
-    value: int
+    def __init__(self, value):
+        self.value = value
 
 class BinaryExpr:
     def __init__(self, left_operand, operator, right_operand):
@@ -44,13 +43,28 @@ class Parser:
         self.tokens = tokens
         self.index = 0
         self.program_body = []
+        self.current_token = None
 
     def parse(self):
         while self.index < len(self.tokens):
-            self.parse_statement()
+            self.current_token = self.tokens[self.index]
 
-        return Program(self.program_body)
+            if self.current_token.type == TokenType.IDENTIFIER:
+                parse_expression()
+
+    def parse_expression(self):
+        # Handle assignments
+        if self.look_ahead()[0].type == TokenType.EQUAL:
+            pass
+
+    def consume(expected_type):
+        pass
     
+    def look_ahead(self, distance: int = 1):
+        next_token_index = self.index + 1
+
+        return self.tokens[next_token_index:next_token_index + distance]
+"""
     def parse_statement(self):
         self.parse_expression()
 
@@ -91,11 +105,4 @@ class Parser:
         token = self.consume_token(TokenType.INTEGER_LITERAL)
         return IntegerLiteral(int(token.value))
     
-    def consume_token(self, expected_type):
-        current_token = self.tokens[self.index]
-
-        if current_token.type != expected_type:
-            raise SyntaxError(f"Unexpected Token Error: Expected {expected_type}, but got {current_token.type}")
-            
-        self.index += 1
-        return current_token            
+"""        

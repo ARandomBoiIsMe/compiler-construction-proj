@@ -1,1 +1,2 @@
-x = 5 + 3 * 8 - 2
+steps = 12
+answer = steps * 2
