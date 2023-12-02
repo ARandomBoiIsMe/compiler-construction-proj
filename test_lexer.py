@@ -6,7 +6,8 @@ def test_assignment():
     assert _lexer.get_tokens() == [
         Token(value='x', type=TokenType.IDENTIFIER),
         Token(value='=', type=TokenType.EQUAL),
-        Token(value='1', type=TokenType.INTEGER_LITERAL)
+        Token(value='1', type=TokenType.INTEGER_LITERAL),
+        Token(value='', type=TokenType.EOF)
     ], "Token list does not match"
 
     _lexer = lexer.Lexer("x = 1 + 2 * 3")
@@ -17,7 +18,8 @@ def test_assignment():
         Token(value='+', type=TokenType.PLUS),
         Token(value='2', type=TokenType.INTEGER_LITERAL),
         Token(value='*', type=TokenType.STAR),
-        Token(value='3', type=TokenType.INTEGER_LITERAL)
+        Token(value='3', type=TokenType.INTEGER_LITERAL),
+        Token(value='', type=TokenType.EOF)
     ], "Token list does not match"
 
     _lexer = lexer.Lexer("steps = 12\nanswer = steps * 2")
@@ -29,7 +31,8 @@ def test_assignment():
     Token(value='=', type=TokenType.EQUAL),
     Token(value='steps', type=TokenType.IDENTIFIER),
     Token(value='*', type=TokenType.STAR),
-    Token(value='2', type=TokenType.INTEGER_LITERAL)
+    Token(value='2', type=TokenType.INTEGER_LITERAL),
+    Token(value='', type=TokenType.EOF)
     ], "Token list does not match"
     
 if __name__ == '__main__':

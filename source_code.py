@@ -1,2 +1,1 @@
-steps = 12
-answer = steps * 2
+a = 10 - 5

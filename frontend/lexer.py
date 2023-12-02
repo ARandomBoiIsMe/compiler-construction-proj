@@ -40,6 +40,7 @@ class TokenType(Enum):
     RIGHT_CURLY_BRACE = 36
     PERIOD = 37
     FLOAT = 38
+    EOF = 39
 
 @dataclass
 class Token:
@@ -323,6 +324,7 @@ class Lexer:
                 self.add_single_token(TokenType.INVALID)
                 continue
 
+        self.tokens.append(Token('', TokenType.EOF))
         return self.tokens
 
     # Adds a single-character token to the token list
