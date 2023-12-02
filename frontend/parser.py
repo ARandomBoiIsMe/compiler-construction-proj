@@ -49,6 +49,7 @@ class ReturnStmt:
 
 class Program:
     def __init__(self, body):
+        self.type = "Program"
         self.body = body
     
     def __repr__(self):
@@ -65,33 +66,32 @@ class Parser:
         while self.tokens[self.index].type != TokenType.EOF:
             self.current_token = self.tokens[self.index]
 
-            if self.current_token.type == TokenType.IDENTIFIER:
-                expression = self.parse_assignment()
-                self.program_body.append(expression)
-
-            elif (
+            if (
                 self.current_token.type == TokenType.IDENTIFIER and
-                self.current_token.value == 'print'
+                self.look_ahead()[0].type == TokenType.EQUAL
             ):
-                pass
+                expression = self.parse_assignment()
+                self.program_body.append(expression)            
+
+            # elif (
+            #     self.current_token.type == TokenType.IDENTIFIER and
+            #     self.current_token.value == 'print'
+            # ):
+            #     print_statement = self.parse_print_statement()
+            #     self.program_body.append(print_statement)
 
         return Program(self.program_body)
 
     def parse_assignment(self):
-        identifier = self.parse_non_terminal_expression()
-
-        if self.current_token.type != TokenType.EQUAL:
-            return None
-        
+        identifier = self.parse_non_terminal_expression()        
         self.move_forward()
         expression = self.parse_additive_expression()
 
         return AssignmentStmt(identifier, expression)
 
     # Handles addition and subtraction expressions
-    # 10 - 7
     def parse_additive_expression(self):
-        left = self.parse_non_terminal_expression()
+        left = self.parse_multiplicative_expression()
 
         if not left:
             return None
@@ -102,7 +102,7 @@ class Parser:
                ):
             operator = self.current_token
             self.move_forward()
-            right = self.parse_non_terminal_expression()
+            right = self.parse_multiplicative_expression()
 
             expr = BinaryExpr(expr, operator, right)
 
@@ -110,28 +110,51 @@ class Parser:
 
     # Handles divison and multiplication expressions
     def parse_multiplicative_expression(self):
+        left = self.parse_exponential_expression()
+
+        if not left:
+            return None
+        
+        expr = left
+        while (self.current_token.type == TokenType.SLASH or 
+               self.current_token.type == TokenType.STAR or
+               self.current_token.type == TokenType.PERCENT
+               ):
+            operator = self.current_token
+            self.move_forward()
+            right = self.parse_exponential_expression()
+
+            expr = BinaryExpr(expr, operator, right)
+
+        return expr
+    
+    def parse_exponential_expression(self):
         left = self.parse_non_terminal_expression()
 
         if not left:
             return None
         
-        while (self.current_token.type == TokenType.SLASH or 
-               self.current_token.type == TokenType.STAR
-               ):
-            pass
+        expr = left
+        while self.current_token.type == TokenType.DOUBLE_STAR:
+            operator = self.current_token
+            self.move_forward()
+            right = self.parse_non_terminal_expression()
+
+            expr = BinaryExpr(expr, operator, right)
+
+        return expr
 
     def parse_non_terminal_expression(self):
-        match (self.current_token.type):
-            case TokenType.IDENTIFIER:
-                identifier = Identifier(self.current_token.value)
-                self.move_forward()
-                return identifier
-            case TokenType.INTEGER_LITERAL:
-                number = IntegerLiteral(self.current_token.value)
-                self.move_forward()
-                return number
-            case _:
-                return None
+        if self.current_token.type == TokenType.IDENTIFIER:
+            identifier = Identifier(self.current_token.value)
+            self.move_forward()
+            return identifier
+        elif self.current_token.type == TokenType.INTEGER_LITERAL:
+            number = IntegerLiteral(self.current_token.value)
+            self.move_forward()
+            return number
+        else:
+            return None
     
     def look_ahead(self, distance: int = 1):
         next_token_index = self.index + 1
