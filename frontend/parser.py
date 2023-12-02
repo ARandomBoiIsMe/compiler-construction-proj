@@ -79,14 +79,17 @@ class Parser:
                 expression = self.parse_assignment()
                 self.program_body.append(expression)            
 
-            # elif (
-            #     self.current_token.type == TokenType.IDENTIFIER and
-            #     self.current_token.value == 'print'
-            # ):
-            #     print_statement = self.parse_print_statement()
-            #     self.program_body.append(print_statement)
+            elif (
+                self.current_token.type == TokenType.IDENTIFIER and
+                self.current_token.value == 'print'
+            ):
+                print_statement = self.parse_print_statement()
+                self.program_body.append(print_statement)
 
         return Program(self.program_body)
+    
+    def parse_print_statement():
+        pass
 
     def parse_assignment(self):
         identifier = self.parse_non_terminal_expression()        
