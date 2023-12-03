@@ -1,5 +1,0 @@
-<program> ::= <function>
-<function> ::= "int" <id> "(" ")" "{" <statement> "}"
-<statement> ::= "return" <exp> ";"
-<exp> ::= <exp> <binary_op> <exp> | <unary_op> <exp> | <int>
-<unary_op> ::= "!" | "~" | "-"

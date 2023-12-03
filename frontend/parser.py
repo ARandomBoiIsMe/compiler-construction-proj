@@ -107,9 +107,10 @@ class Parser:
             return None
         
         expr = left
-        while (self.current_token.type == TokenType.PLUS or 
-               self.current_token.type == TokenType.MINUS
-               ):
+        while (
+            self.current_token.type == TokenType.PLUS or 
+            self.current_token.type == TokenType.MINUS
+            ):
             operator = self.current_token
             self.move_forward()
             right = self.parse_multiplicative_expression()

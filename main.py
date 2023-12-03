@@ -1,9 +1,9 @@
 from frontend import lexer, parser
-import interpreter
+from backend import interpreter
+import sys
 
 def main():
-    with open('source_code.py', 'r') as file:
-        source_code = file.read()
+    source_code = sys.argv[1]
 
     _lexer = lexer.Lexer(source_code)
     tokens = _lexer.get_tokens()

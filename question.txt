@@ -1,5 +1,0 @@
-Calculate the square of the number of footsteps an average student will take in moving from 
-CIT to NH Studio 5 regardless of the length of strides of each student takes.
-
-steps = constant
-result = steps * steps
