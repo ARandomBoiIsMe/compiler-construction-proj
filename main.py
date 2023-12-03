@@ -1,4 +1,5 @@
 from frontend import lexer, parser
+import interpreter
 
 def main():
     with open('source_code.py', 'r') as file:
@@ -8,7 +9,10 @@ def main():
     tokens = _lexer.get_tokens()
 
     _parser = parser.Parser(tokens)
-    print(_parser.parse().body)
+    program = _parser.parse()
+
+    _intepreter = interpreter.Interpreter(program.body)
+    _intepreter.interprete_ast()
 
 if __name__ == '__main__':
     main()

@@ -5,61 +5,63 @@ class Identifier:
     def __init__(self, name):
         self.type = "Identifier"
         self.name = name
-    
+
     def __repr__(self):
-        return f'Identifier(name={self.name})'
+        return f"Identifier(name={self.name})"
 
 class IntegerLiteral:
     def __init__(self, value):
         self.type = "IntegerLiteral"
         self.value = value
-    
+
     def __repr__(self):
-        return f'IntegerLiteral(value={self.value})'
+        return f"IntegerLiteral(value={self.value})"
 
 class BinaryExpr:
-    def __init__(self, left_operand, operator, right_operand):
+    def __init__(self, left, operator, right):
         self.type = "BinaryExpr"
-        self.left_operand = left_operand
+        self.left = left
         self.operator = operator
-        self.right_operand = right_operand
-    
+        self.right = right
+
     def __repr__(self):
-        return f'BinaryExpr(left_operand={self.left_operand}, operator={self.operator}, right_operand={self.right_operand})'
+        return (
+            f"BinaryExpr(left={self.left}, operator={self.operator}, right={self.right})"
+        )
 
 class UnaryExpr:
     def __init__(self, unary_operand, operator):
         self.type = "UnaryExpr"
         self.unary_operand = unary_operand
         self.operator = operator
-    
+
     def __repr__(self):
-        return f'UnaryExpr(unary_operand={self.unary_operand}, operator={self.operator})'
+        return f"UnaryExpr(unary_operand={self.unary_operand}, operator={self.operator})"
 
 class AssignmentStmt:
     def __init__(self, identifier, expr):
         self.type = "AssignmentStmt"
         self.identifier = identifier
         self.expr = expr
-    
+
     def __repr__(self):
-        return f'AssignmentStmt(identifier={self.identifier}, expr={self.expr})'
+        return f"AssignmentStmt(identifier={self.identifier}, expr={self.expr})"
 
 class PrintStmt:
     def __init__(self, expr):
         self.type = "PrintStmt"
         self.expr = expr
-    
+
     def __repr__(self):
-        return f'PrintStmt(expr={self.expr})'
+        return f"PrintStmt(expr={self.expr})"
 
 class Program:
     def __init__(self, body):
         self.type = "Program"
         self.body = body
-    
+
     def __repr__(self):
-        return f'Program(body={self.body})'
+        return f"Program(body={self.body})"
 
 class Parser:
     def __init__(self, tokens: List[Token]):
@@ -121,7 +123,7 @@ class Parser:
             self.move_forward()
             right = self.parse_multiplicative_expression()
 
-            expr = BinaryExpr(expr, operator, right)
+            expr = BinaryExpr(expr, operator.value, right)
 
         return expr
 
@@ -141,7 +143,7 @@ class Parser:
             self.move_forward()
             right = self.parse_exponential_expression()
 
-            expr = BinaryExpr(expr, operator, right)
+            expr = BinaryExpr(expr, operator.value, right)
 
         return expr
     
@@ -157,7 +159,7 @@ class Parser:
             self.move_forward()
             right = self.parse_non_terminal_expression()
 
-            expr = BinaryExpr(expr, operator, right)
+            expr = BinaryExpr(expr, operator.value, right)
 
         return expr
 
