@@ -37,5 +37,7 @@ class Interpreter:
                 return left * right
             elif statement.operator == '/':
                 return left // right
+            elif statement.operator == '%':
+                return left % right
             elif statement.operator == '**':
                 return left ^ right
