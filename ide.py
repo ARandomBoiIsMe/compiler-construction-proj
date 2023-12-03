@@ -1,5 +1,3 @@
-from frontend import lexer, parser
-from backend import interpreter
 import tkinter as tk
 import tkinter.scrolledtext as scrolledtext
 import tkinter.filedialog as filedialog
@@ -47,6 +45,9 @@ def open_file():
 root = tk.Tk()
 root.title("Compiler Construction Group 6")
 
+# Set dark theme
+root.tk_setPalette(background='#1e1e1e', foreground='white', activeBackground='#31363b', activeForeground='white')
+
 menu_bar = tk.Menu(root)
 root.config(menu=menu_bar)
 
@@ -58,11 +59,11 @@ file_menu = tk.Menu(menu_bar, tearoff=False)
 menu_bar.add_cascade(label="File", menu=file_menu)
 file_menu.add_command(label= "Open", command=open_file)
 
-text_widget = scrolledtext.ScrolledText(root, wrap=tk.WORD)
+text_widget = scrolledtext.ScrolledText(root, wrap=tk.WORD, background='#1e1e1e', foreground='white')
 text_widget.pack(expand=True, fill='both')
 text_widget.configure(font=("TkDefaultFont", 10))
 
-output_text = scrolledtext.ScrolledText(root, wrap=tk.WORD)
+output_text = scrolledtext.ScrolledText(root, wrap=tk.WORD, background='#1e1e1e', foreground='white')
 output_text.pack(expand=True, fill='both')
 output_text.tag_configure("error", foreground="red")
 output_text.config(state=tk.DISABLED)
