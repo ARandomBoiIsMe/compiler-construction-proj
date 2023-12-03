@@ -29,15 +29,6 @@ class BinaryExpr:
             f"BinaryExpr(left={self.left}, operator={self.operator}, right={self.right})"
         )
 
-class UnaryExpr:
-    def __init__(self, unary_operand, operator):
-        self.type = "UnaryExpr"
-        self.unary_operand = unary_operand
-        self.operator = operator
-
-    def __repr__(self):
-        return f"UnaryExpr(unary_operand={self.unary_operand}, operator={self.operator})"
-
 class AssignmentStmt:
     def __init__(self, identifier, expr):
         self.type = "AssignmentStmt"
